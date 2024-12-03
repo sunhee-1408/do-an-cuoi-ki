@@ -151,7 +151,7 @@ def Clear():
     oldpeak.set('')
 
 #icon 1
-imade_icon = PhotoImage(file="images/images(1).png")
+imade_icon = PhotoImage(file="")
 root.iconphoto(False,imade_icon)
 
 # header 2
