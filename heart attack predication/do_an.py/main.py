@@ -68,7 +68,7 @@ detail_entry.place(x=30,y=450)
 #--------------radio button ------------
 Label(detail_entry,text="sex:",font="arial 13",bg=framebg,fg=framefg).place(x=10,y=10)
 Label(detail_entry,text="fbs:",font="arial 13",bg=framebg,fg=framefg).place(x=180,y=10)
-Label(detail_entry,text="exang:",font="arial 13",bg=framebg,fg=framefg).place(x=335,y=10)
+Label(detail_entry,text="exng:",font="arial 13",bg=framebg,fg=framefg).place(x=335,y=10)
 
 def selection():
     if gen.get() == 1:
@@ -81,7 +81,6 @@ def selection():
         print(gender)
     else:
         print(gender)
-
 
 def selection2():
     if fbs.get() == 1:
@@ -96,16 +95,16 @@ def selection2():
         print(Fbs)
 
 def selection3():
-    if exang.get() == 1:
-        Exang= 1
-        return(Exang)
+    if exng.get() == 1:
+        Exng= 1
+        return(Exng)
         print(Exang)
-    elif exang.get() == 2:
-        Exang=0
-        return(Exang)
-        print(Exang)
+    elif exng.get() == 2:
+        Exng=0
+        return(Exng)
+        print(Exng)
     else:
-        print(Exang)
+        print(Exng)
 
 gen=IntVar()
 r1=Radiobutton(detail_entry,text="male", variable=gen, value=1)
@@ -121,9 +120,9 @@ r3.place(x=213 ,y=10)
 r4.place(x=263,y=10)
 
 
-exang=IntVar()
-r5=Radiobutton(detail_entry,text="Yes", variable=exang, value=1)
-r6=Radiobutton(detail_entry,text="No",variable=exang, value=2)
+exng=IntVar()
+r5=Radiobutton(detail_entry,text="Yes", variable=exng, value=1)
+r6=Radiobutton(detail_entry,text="No",variable=exng, value=2)
 r5.place(x=387 ,y=10)
 r6.place(x=430,y=10)
 
@@ -147,7 +146,7 @@ def selection4():
     elif input=="3":
         return(3)
     else:
-        print(exang)
+        print(exng)
     
 
 def selection5():
@@ -159,7 +158,7 @@ def selection5():
     elif input=="2":
         return(2)
     else:
-        print(exang)
+        print(exng)
 
     
 
@@ -176,7 +175,7 @@ restecg_combobox.place(x=80, y=90)
 slp_combobox.place(x=70, y=130)
 caa_combobox.place(x=50, y=170)
 thall_combobox.place(x=50, y=210)
-c
+
 ######## entry_box
 Label(detail_entry, text="Smoking:", font ="arial 13", width=7, bg="#dbe0e3", fg="black").place(x=240, y=50)
 Label(detail_entry, text="trtbps:", font ="arial 13", width=7, bg=framebg, fg="black").place(x=240, y=90)
@@ -258,7 +257,6 @@ mode.place(x=350, y=495)
 logout_icon=PhotoImage(file="")
 logout_button=Button(root, image=logout_icon, bg="#df2d4b", cursor='hand2', bd=0)
 logout_button.place(x=1390, y=60)
-
 
 
 root.mainloop()
