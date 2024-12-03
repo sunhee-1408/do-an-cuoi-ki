@@ -68,7 +68,7 @@ detail_entry.place(x=30,y=450)
 #--------------radio button ------------
 Label(detail_entry,text="sex:",font="arial 13",bg=framebg,fg=framefg).place(x=10,y=10)
 Label(detail_entry,text="fbs:",font="arial 13",bg=framebg,fg=framefg).place(x=180,y=10)
-Label(detail_entry,text="exng:",font="arial 13",bg=framebg,fg=framefg).place(x=335,y=10)
+Label(detail_entry,text="exang:",font="arial 13",bg=framebg,fg=framefg).place(x=335,y=10)
 
 def selection():
     if gen.get() == 1:
@@ -96,16 +96,16 @@ def selection2():
         print(Fbs)
 
 def selection3():
-    if exng.get() == 1:
-        Exng= 1
+    if exang.get() == 1:
+        Exang= 1
         return(Exang)
-        print(Exng)
+        print(Exang)
     elif exang.get() == 2:
-        Exng=0
-        return(Exng)
-        print(Exng)
+        Exang=0
+        return(Exang)
+        print(Exang)
     else:
-        print(Exng)
+        print(Exang)
 
 gen=IntVar()
 r1=Radiobutton(detail_entry,text="male", variable=gen, value=1)
@@ -134,4 +134,131 @@ Label(detail_entry,text="restecg",font="arial 13",bg=framebg,fg=framefg).place(x
 Label(detail_entry,text="slp",font="arial 13",bg=framebg,fg=framefg).place(x=10,y=130)
 Label(detail_entry,text="caa",font="arial 13",bg=framebg,fg=framefg).place(x=10,y=170)
 Label(detail_entry,text="thall",font="arial 13",bg=framebg,fg=framefg).place(x=10,y=210)
+
+
+def selection4():
+    input=cp_combobox.get()
+    if input =="0":
+        return(0)
+    elif input=="1":
+        return (1)
+    elif input=="2":
+        return(2)
+    elif input=="3":
+        return(3)
+    else:
+        print(exang)
+    
+
+def selection5():
+    input=slp_combobox.get()
+    if input =="0":
+        return(0)
+    elif input=="1":
+        return (1)
+    elif input=="2":
+        return(2)
+    else:
+        print(exang)
+
+    
+
+##########
+cp_combobox=Combobox(detail_entry, values = ['0, 1, 2, 3'], state='r', width=11)
+restecg_combobox=Combobox(detail_entry, values = ['0, 1'], font ="arial 12", state='r', width=11)
+slp_combobox=Combobox(detail_entry, values = ['0, 1, 2'], font ="arial 12", state='r', width=11)
+caa_combobox=Combobox(detail_entry, values = ['0, 1, 2'], font ="arial 12", state='r', width=11)
+thall_combobox=Combobox(detail_entry, values = [1, 2, 3], font ="arial 12", state='r', width=11)
+
+
+cp_combobox.place(x=50, y=50)
+restecg_combobox.place(x=80, y=90)
+slp_combobox.place(x=70, y=130)
+caa_combobox.place(x=50, y=170)
+thall_combobox.place(x=50, y=210)
+
+######## entry_box
+Label(detail_entry, text="Smoking:", font ="arial 13", width=7, bg="#dbe0e3", fg="black").place(x=240, y=50)
+Label(detail_entry, text="trtbps:", font ="arial 13", width=7, bg=framebg, fg="black").place(x=240, y=90)
+Label(detail_entry, text="chol:", font ="arial 13", width=7, bg=framebg, fg="black").place(x=240, y=130)
+Label(detail_entry, text="thalachh:", font ="arial 13", width=7, bg=framebg, fg="black").place(x=240, y=170)
+Label(detail_entry, text="oldpeak:", font ="arial 13", width=7, bg=framebg, fg="black").place(x=240, y=210)
+
+
+trtbps= StringVar()
+chol= StringVar()
+thalachh= StringVar()
+oldpeak= StringVar()
+
+trtbps_entry=Entry(detail_entry, textvariable=trtbps, width=10, font ="arial 15", bg="#ededed", fg="#222222", bd=0)
+chol_entry=Entry(detail_entry, textvariable=chol, width=10, font ="arial 15", bg="#ededed", fg="#222222", bd=0)
+thalachh_entry=Entry(detail_entry, textvariable=thalachh, width=10, font ="arial 15", bg="#ededed", fg="#222222", bd=0)
+oldpeak_entry=Entry(detail_entry, textvariable=oldpeak, width=10, font ="arial 15", bg="#ededed", fg="#222222", bd=0)
+
+
+trtbps_entry.place(x=320, y=90)
+chol_entry.place(x=320, y=130)
+thalachh_entry.place(x=320, y=170)
+oldpeak_entry.place(x=320, y=210)
+
+###############Report ####
+square_report_image=PhotoImage(file="")
+report_background=Label(image=square_report_image, bg= background)
+report_background.place(x=1120, y= 340)
+
+report=Label(root, font="arial 25 bold", bg="white", fg="#8dc36f")
+report.place(x=1130, y=610)
+
+#############Graph #####
+graph_image=PhotoImage(file="")
+Label(image=graph_image).place(x=600, y=270)
+Label(image=graph_image).place(x=860, y=270)
+Label(image=graph_image).place(x=600, y=500)
+Label(image=graph_image).place(x=860, y=500)
+
+
+######Button 
+analysis_button=PhotoImage(file="")
+Button(root, image=analysis_button, bd=0, bg=background, cursor= 'hand2').place(x=1130, y=240)
+
+#####Save_button
+save_button=PhotoImage(file="")
+Button(root, image= save_button, bg=background, cursor= 'hand2').place(x=1370, y=250)
+
+
+
+####Smoking and Non Smoking
+button_mode=True
+choice="smoking"
+
+button_mode=True
+choice="smoking"
+def changemode():
+    global button_mode
+    global choice
+    if button_mode:
+        choice="nonsmoking_icon "
+        mode.config(image=nonsmoking_icon, activebackground= "white")
+        button_mode=False
+    else:
+        choice="smoking_icon"
+        mode.config(image=smoking_icon, activebackground="white")
+        button_mode=True
+    
+    print(choice)
+
+smoking_icon=PhotoImage(file="")
+nonsmoking_icon=PhotoImage(file="")
+
+mode=Button(root,image=smoking_icon, bg="#dbe0e3", bd=0, cursor='hand2', command=changemode)
+mode.place(x=350, y=495)
+
+
+############Logout_Button
+logout_icon=PhotoImage(file="")
+logout_button=Button(root, image=logout_icon, bg="#df2d4b", cursor='hand2', bd=0)
+logout_button.place(x=1390, y=60)
+
+
+
 root.mainloop()
