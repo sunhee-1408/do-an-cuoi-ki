@@ -6,7 +6,7 @@ Icon.geometry('850x600')
 IcTT = PhotoImage(file = 'C:/Users/hi/Documents/Đồ án/Information.png')
 Icon.iconphoto(False, IcTT)
 
-#Tiêu đề của phần chú
+#Tiêu đề của phần chú thích
 Label(Icon,text='Information Related To Heart Attack Analysis & Prediction Dataset', font ='robot 19 bold').pack(padx = 20, pady = 20)
 
 #Chú thích
