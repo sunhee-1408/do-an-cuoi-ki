@@ -68,7 +68,7 @@ detail_entry.place(x=30,y=450)
 #--------------radio button ------------
 Label(detail_entry,text="sex:",font="arial 13",bg=framebg,fg=framefg).place(x=10,y=10)
 Label(detail_entry,text="fbs:",font="arial 13",bg=framebg,fg=framefg).place(x=180,y=10)
-Label(detail_entry,text="exang:",font="arial 13",bg=framebg,fg=framefg).place(x=335,y=10)
+Label(detail_entry,text="exng:",font="arial 13",bg=framebg,fg=framefg).place(x=335,y=10)
 
 def selection():
     if gen.get() == 1:
@@ -96,16 +96,16 @@ def selection2():
         print(Fbs)
 
 def selection3():
-    if exang.get() == 1:
-        Exang= 1
+    if exng.get() == 1:
+        Exng= 1
         return(Exang)
-        print(Exang)
+        print(Exng)
     elif exang.get() == 2:
-        Exang=0
-        return(Exang)
-        print(Exang)
+        Exng=0
+        return(Exng)
+        print(Exng)
     else:
-        print(Exang)
+        print(Exng)
 
 gen=IntVar()
 r1=Radiobutton(detail_entry,text="male", variable=gen, value=1)
