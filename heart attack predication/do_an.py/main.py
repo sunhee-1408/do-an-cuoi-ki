@@ -5,7 +5,7 @@ import datetime # làm
 import tkinter as tk 
 from tkinter import ttk 
 import os #  tương tác với hệ thống tệp 
-
+from tkinter import messagebox
 import matplotlib # thuư viện về biểu đồ
 
 matplotlib.use("TkAgg") # thiết lập giao diện
@@ -29,7 +29,127 @@ root.resizable(False,False) # ko cho chinh sua kich thuoc
 root.configure(bg=background)  # Thay đổi màu nền của cửa sổ chính
 
 #----------------------------------------------------------------------------------------------------------------------------------------------
- 
+
+###Phân tích
+def analysis():
+    name = Name.get()
+    D1 = date.get()
+    today = datetime.date.today()
+    A = today.year-DOB.get()
+
+    try:
+        B = selection()
+    except:
+        messagebox.showerror('Missing','Please select gender!')
+        return
+     
+    try:
+        F = selection2()
+    except:
+        messagebox.showerror('Missing','Please select fbs!')
+        return 
+    
+    try:
+        I = selection3()
+    except:
+        messagebox.showerror('Missing','Please select exang!')
+        return
+    
+    try:
+        C = int(selection4())
+    except:
+        messagebox.showerror('Missing','Please select cp!')
+        return
+    
+    try:
+        G = int(restecg_combobox.get())
+    except:
+        messagebox.showerror('Missing','Please select restecg!')
+        return 
+    
+    try:
+        K = int(selection5())
+    except:
+        messagebox.showerror('Missing','Please select slope!')
+        return
+    
+    try:
+        L = int(ca_combobox.get())
+    except:
+        messagebox.showerror('Missing','Please select ca!')
+        return
+    
+    try:
+        M = int(thall_combobox.get())
+    except:
+        messagebox.showerror('Missing','Please select thal!')
+        return 
+
+    try:
+        D = int(trtbps.get())
+        E = int(chol.get())
+        H = int(thalachh.get())
+        J = int(oldpeak.get())
+    except:
+        messagebox.showerror('Missing data','Few missing data entry!')
+        return 
+    #Kiểm tra có hoạt động không
+    print('A is age: ',A)
+    print('B is gender: ',B)
+    print('C is cp: ',C)
+    print('D is trestbps: ',D)
+    print('E is chol: ',E)
+    print('F is fbs: ',F)
+    print('G is restcg: ',G)
+    print('H is thalach: ',H)
+    print('I is Exang: ',I)
+    print('J is oldpeak: ',J)
+    print('K is slop: ',K)
+    print('L is ca: ',L)
+    print('M is thal: ',M)
+
+#Chú thích (Nút Info)
+def Info():
+    Icon = Toplevel(root)
+    Icon.title('Thông tin')
+    Icon.geometry('850x600')
+    #Icon chú thích
+    IcTT = PhotoImage(file = '')
+    Icon.iconphoto(False, IcTT)
+
+    #Tiêu đề của phần chú
+    Label(Icon,text='Information Related To Heart Attack Analysis & Prediction Dataset', font ='robot 19 bold').pack(padx = 20, pady = 20)
+
+    #Chú thích
+    Label(Icon,text='age - Age of the person',font='arial 11').place(x=20,y=100)
+    Label(Icon,text='sex - Gender of person',font='arial 11').place(x=20,y=130)
+    Label(Icon,text='cp - Chest Pain type chest pain type',font='arial 11').place(x=20,y=160)
+    Label(Icon,text='trestbps - resting blood pressure (in mm Hg)',font='arial 11').place(x=20,y=190)
+    Label(Icon,text='chol - cholestoral in mg/dl fetched via BMI sensor',font='arial 11').place(x=20,y=220)
+    Label(Icon,text='fbs - fasting blood suger > 120 mg/dl (1 = true; 0 = false)',font='arial 11').place(x=20,y=250)
+    Label(Icon,text='restecg - resting electrocardiographic results',font='arial 11').place(x=20,y=280)
+    Label(Icon,text='thalachh - maximum heart rate achieved',font='arial 11').place(x=20,y=310)
+    Label(Icon,text='exang - exercise included agina (1 = yes; 0 = no)',font='arial 11').place(x=20,y=340)
+    Label(Icon,text='old peak - Previous peak',font='arial 11').place(x=20,y=370)
+    Label(Icon,text='slope - the slope of the peak exercise ST segment',font='arial 11').place(x=20,y=400)
+    Label(Icon,text='ca - number of major vessels',font='arial 11').place(x=20,y=430)
+    Label(Icon,text='thal - 0; 1 = fixed defect; 2 = reversable defect',font='arial 11').place(x=20,y=460)
+
+    Icon.mainloop()
+
+####Nút tắt
+def logout():
+    root.destroy()
+
+###Nút xóa
+def Clear():
+    Name.get('')
+    DOB.get('')
+    trtbps.get('')
+    chol.get('')
+    thalachh.set('')
+    oldpeak.set('')
+
 #icon 1
 imade_icon = PhotoImage(file="images/images(1).png")
 root.iconphoto(False,imade_icon)
@@ -57,6 +177,21 @@ registration=IntVar()
 reg_entry =Entry(heading_entry,textvariable=registration,width=30,font="arial 15",bg="#0e5363",fg="white",bd=0)
 reg_entry.place(x=30,y=45)
 
+Date = StringVar()
+today = date.today()
+d1 = today.strftime("%d/%m/%Y")
+date_entry = Entry(heading_entry,textvariable=Date,width=15,font='arial 15',bg='#0e5363',fg='white',bd=0)
+date_entry.place(x=500,y=45)
+Date.set(d1)
+
+Name = StringVar()
+name_entry = Entry(heading_entry,textvariable=Name,width=20,font='arial 20',bg='#ededed',fg='#222222',bd=0)
+name_entry.place(x=30,y=130)
+
+DOB = IntVar()
+dob_entry = Entry(heading_entry,textvariable=DOB,width=20,font='arial 20',bg='#ededed',fg='#222222',bd=0)
+dob_entry.place(x=450,y=130)
+
 age=IntVar()
 age_entry= Entry(heading_entry,textvariable=age,width=20, font="arial 20", bg="#ededed",fg="#222222",bd=0)
 age_entry.place(x=30,y=130)
@@ -68,7 +203,7 @@ detail_entry.place(x=30,y=450)
 #--------------radio button ------------
 Label(detail_entry,text="sex:",font="arial 13",bg=framebg,fg=framefg).place(x=10,y=10)
 Label(detail_entry,text="fbs:",font="arial 13",bg=framebg,fg=framefg).place(x=180,y=10)
-Label(detail_entry,text="exng:",font="arial 13",bg=framebg,fg=framefg).place(x=335,y=10)
+Label(detail_entry,text="exang:",font="arial 13",bg=framebg,fg=framefg).place(x=335,y=10)
 
 def selection():
     if gen.get() == 1:
@@ -81,6 +216,7 @@ def selection():
         print(gender)
     else:
         print(gender)
+
 
 def selection2():
     if fbs.get() == 1:
@@ -95,16 +231,16 @@ def selection2():
         print(Fbs)
 
 def selection3():
-    if exng.get() == 1:
-        Exng= 1
-        return(Exng)
+    if exang.get() == 1:
+        Exang= 1
+        return(Exang)
         print(Exang)
-    elif exng.get() == 2:
-        Exng=0
-        return(Exng)
-        print(Exng)
+    elif exang.get() == 2:
+        Exang=0
+        return(Exang)
+        print(Exang)
     else:
-        print(Exng)
+        print(Exang)
 
 gen=IntVar()
 r1=Radiobutton(detail_entry,text="male", variable=gen, value=1)
@@ -120,9 +256,9 @@ r3.place(x=213 ,y=10)
 r4.place(x=263,y=10)
 
 
-exng=IntVar()
-r5=Radiobutton(detail_entry,text="Yes", variable=exng, value=1)
-r6=Radiobutton(detail_entry,text="No",variable=exng, value=2)
+exang=IntVar()
+r5=Radiobutton(detail_entry,text="Yes", variable=exang, value=1)
+r6=Radiobutton(detail_entry,text="No",variable=exang, value=2)
 r5.place(x=387 ,y=10)
 r6.place(x=430,y=10)
 
@@ -146,7 +282,7 @@ def selection4():
     elif input=="3":
         return(3)
     else:
-        print(exng)
+        print(exang)
     
 
 def selection5():
@@ -158,7 +294,7 @@ def selection5():
     elif input=="2":
         return(2)
     else:
-        print(exng)
+        print(exang)
 
     
 
@@ -166,14 +302,14 @@ def selection5():
 cp_combobox=Combobox(detail_entry, values = ['0 = typical angina','1 = atypical angina', '2 = non-anginal pain ', '3 = asympotomaic'], state='r', width=21)
 restecg_combobox=Combobox(detail_entry, values = ['0', '1','2'], font ="arial 12", state='r', width=11)
 slp_combobox=Combobox(detail_entry, values = ['0 = upsloping','1 = flat ','2 = downloping'], font ="arial 12", state='r', width=12)
-caa_combobox=Combobox(detail_entry, values = ['0', '1', '2','3','4'], font ="arial 12", state='r', width=14)
+ca_combobox=Combobox(detail_entry, values = ['0', '1', '2','3','4'], font ="arial 12", state='r', width=14)
 thall_combobox=Combobox(detail_entry, values = ['0','1','2','3'], font ="arial 12", state='r', width=14)
 
 
 cp_combobox.place(x=50, y=50)
 restecg_combobox.place(x=80, y=90)
 slp_combobox.place(x=70, y=130)
-caa_combobox.place(x=50, y=170)
+ca_combobox.place(x=50, y=170)
 thall_combobox.place(x=50, y=210)
 
 ######## entry_box
@@ -218,8 +354,10 @@ Label(image=graph_image).place(x=860, y=500)
 
 ######Button 
 analysis_button=PhotoImage(file="")
-Button(root, image=analysis_button, bd=0, bg=background, cursor= 'hand2').place(x=1130, y=240)
-
+Button(root, image=analysis_button, bd=0, bg=background, cursor= 'hand2',command=analysis).place(x=1130, y=240)
+######Info button
+info_button = PhotoImage(file ="")
+Button(root,image=info_button,bd=0,bg=background,cursor='hand2',command=Info).place(x=10,y=240)
 #####Save_button
 save_button=PhotoImage(file="")
 Button(root, image= save_button, bg=background, cursor= 'hand2').place(x=1370, y=250)
@@ -255,8 +393,9 @@ mode.place(x=350, y=495)
 
 ############Logout_Button
 logout_icon=PhotoImage(file="")
-logout_button=Button(root, image=logout_icon, bg="#df2d4b", cursor='hand2', bd=0)
+logout_button=Button(root, image=logout_icon, bg="#df2d4b", cursor='hand2', bd=0,command=logout)
 logout_button.place(x=1390, y=60)
+
 
 
 root.mainloop()
