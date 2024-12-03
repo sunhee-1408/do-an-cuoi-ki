@@ -164,11 +164,11 @@ def selection5():
     
 
 ##########
-cp_combobox=Combobox(detail_entry, values = ['0, 1, 2, 3'], state='r', width=11)
-restecg_combobox=Combobox(detail_entry, values = ['0, 1'], font ="arial 12", state='r', width=11)
-slp_combobox=Combobox(detail_entry, values = ['0, 1, 2'], font ="arial 12", state='r', width=11)
-caa_combobox=Combobox(detail_entry, values = ['0, 1, 2'], font ="arial 12", state='r', width=11)
-thall_combobox=Combobox(detail_entry, values = [1, 2, 3], font ="arial 12", state='r', width=11)
+cp_combobox=Combobox(detail_entry, values = ['0 = typical angina','1 = atypical angina', '2 = non-anginal pain ', '3 = asympotomaic'], state='r', width=21)
+restecg_combobox=Combobox(detail_entry, values = ['0', '1','2'], font ="arial 12", state='r', width=11)
+slp_combobox=Combobox(detail_entry, values = ['0 = upsloping','1 = flat ','2 = downloping'], font ="arial 12", state='r', width=12)
+caa_combobox=Combobox(detail_entry, values = ['0', '1', '2','3','4'], font ="arial 12", state='r', width=14)
+thall_combobox=Combobox(detail_entry, values = ['0','1','2','3'], font ="arial 12", state='r', width=14)
 
 
 cp_combobox.place(x=50, y=50)
@@ -176,7 +176,7 @@ restecg_combobox.place(x=80, y=90)
 slp_combobox.place(x=70, y=130)
 caa_combobox.place(x=50, y=170)
 thall_combobox.place(x=50, y=210)
-
+c
 ######## entry_box
 Label(detail_entry, text="Smoking:", font ="arial 13", width=7, bg="#dbe0e3", fg="black").place(x=240, y=50)
 Label(detail_entry, text="trtbps:", font ="arial 13", width=7, bg=framebg, fg="black").place(x=240, y=90)
