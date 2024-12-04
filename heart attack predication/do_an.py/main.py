@@ -1,7 +1,7 @@
 from tkinter import *
 from datetime import date # thư viện làm việc với ngày và thời gian
 from tkinter.ttk import Combobox # giao diện sịn sò hơn
-import datetime # làm 
+import datetime # làm việc với thời gian
 import tkinter as tk 
 from tkinter import ttk 
 import os #  tương tác với hệ thống tệp 
