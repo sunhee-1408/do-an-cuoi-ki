@@ -33,8 +33,8 @@ root.configure(bg=background)  # Thay đổi màu nền của cửa sổ chính
 ###Phân tích
 def analysis():
     name = Name.get()
-    D1 = date.get()
-    today = datetime.date.today()
+    D1 = Date.get()
+    today = datetime.data.today()
     A = today.year-DOB.get()
 
     try:
