@@ -112,7 +112,7 @@ def analysis():
 def Info():
     Icon = Toplevel(root)
     Icon.title('Thông tin')
-    Icon.geometry('850x600')
+    Icon.geometry('700x600+100+100')
     #Icon chú thích
     IcTT = PhotoImage(file = '')
     Icon.iconphoto(False, IcTT)
