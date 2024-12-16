@@ -275,7 +275,7 @@ framefg = "#fefbfb"
 root=Tk()
 root.title("HEART ATTACK  PREDICTION SYSTEM")  #Tiêu đề
 root.geometry("1400x730+60+80") #Kích thước
-root.resizable(False,False) # Không chỉnh sửa được kích thước
+root.resizable(True, True) # Không chỉnh sửa được kích thước
 root.configure(bg=background) #Thay đổi nền của cửa sổ chính
 
 
@@ -285,7 +285,10 @@ crud_entry.place(x=0,y=0)
 
 Du_Lieu = None
 treeview = None
-
+current_page = 0
+row_in_page = 27
+#Tạo frame chứa các nút trang
+Frame_Button = tk.Frame(root, bg=background)
 #Hàm tạo Treeview
 def Create_Treeview():
     global treeview
@@ -321,11 +324,11 @@ def Create_Treeview():
 
 #Tạo frame chứa Treeview
 frame = tk.Frame(root, bg='#f0ddd5')
-frame.place(x=400, y=30, width=930, height=660)
+frame.place(x=400, y=0, width=885, height=600)
 
 #Tạo hàm mở file csv
 def Open_Folder(): #Mở thư mục
-    global Du_Lieu, treeview
+    global Du_Lieu, treeview, current_page
     #Mở hộp thoại để chọn tệp (người dùng chỉ có thể chọn file có đuôi csv)
     file_path = filedialog.askopenfilename(
         title='Chọn file csv',
@@ -334,10 +337,76 @@ def Open_Folder(): #Mở thư mục
         return
     try:
         Du_Lieu = pd.read_csv(file_path) #Đọc tệp csv vào biến Du_Lieu theo dạng DataFrame
+        current_page = 0
+        Create_Treeview()
+        Update_Page_Treeview()
+        Create_Page_Button()
     except Exception as e:
         messagebox.showerror('Lỗi',f'không thể đọc file {e}')
         return
     Create_Treeview()
+
+#Hàm cập nhật Treeview theo trang
+def Update_Page_Treeview():
+    global treeview, current_page
+    # Tính tổng số trang
+    all_page = (len(Du_Lieu) + row_in_page - 1) // row_in_page
+    if current_page >= all_page:
+        current_page = max(0, all_page - 1)  # Giới hạn current_page trong phạm vi hợp lệ
+
+    # Tính hàng bắt đầu và kết thúc
+    start_row = current_page * row_in_page
+    end_row = min(start_row + row_in_page, len(Du_Lieu))
+
+    # Xóa dữ liệu hiện tại của Treeview
+    for item in treeview.get_children():
+        treeview.delete(item)
+
+    # Chèn dữ liệu tương ứng với trang hiện tại
+    for _, row in Du_Lieu.iloc[start_row:end_row].iterrows():
+        treeview.insert('', 'end', values=list(row))
+
+#Hàm chuyển trang
+def Go_To_Page(page):
+    global current_page
+    all_page = (len(Du_Lieu) + row_in_page - 1) // row_in_page
+    if 0 <= page < all_page:
+        current_page = page
+        Update_Page_Treeview()
+
+#Hàm tạo các nút trang (phân trang)
+def Create_Page_Button():
+    global all_page
+
+    for widget in Frame_Button.winfo_children():
+        widget.destroy()
+
+    all_page = (len(Du_Lieu) + row_in_page - 1) // row_in_page #Tính số trang
+
+    Frame_Button.place(x=440, y=610, width=700, height=100)
+    cot_count = 0
+    hang_count = 0
+    for i in range(all_page):
+        Button_Page = Button(Frame_Button, text=f'Trang {i+1}', bd=1, bg='white', cursor='hand2',
+                             width=8, command=lambda page=i: Go_To_Page(page))  # Truyền tham số page
+        Button_Page.grid(row=hang_count, column=cot_count, padx=7, pady=5)
+        cot_count += 1
+        if cot_count >= 8:  # Sau 8 cột chuyển sang hàng mới
+            cot_count = 0
+            hang_count += 1
+    Button(Frame_Button, text='Tất cả các trang', bd=1, bg='white', cursor='hand2', width=30, command=All_Page).grid(row=hang_count, column=cot_count, columnspan=8, padx=5, pady=5, sticky='nsew')
+
+#Tạo hàm trở về tất cả các trang 
+def All_Page():
+    global current_page
+    # Xóa dữ liệu cũ trong Treeview
+    for item in treeview.get_children():
+        treeview.delete(item)
+    # Hiển thị toàn bộ dữ liệu trong Treeview mà không phân trang
+    for _, row in Du_Lieu.iterrows():
+        treeview.insert('', 'end', values=list(row))
+    # Đặt lại trạng thái trang hiện tại về ban đầu (không có phân trang)
+    current_page = -1
 
 #Tạo hàm kiểm tra dữ liệu người dùng nhập vào
 def Check(prompt):
@@ -359,7 +428,7 @@ def Update_Treeview():
         treeview.delete(item)
     for _, row in Du_Lieu.iterrows():
         treeview.insert('', 'end', values=list(row))
-
+        Create_Page_Button()
 #Hàm để tạo dòng mới
 def Create_Data():
     global Du_Lieu
@@ -387,7 +456,10 @@ def Create_Data():
         global Du_Lieu #Dùng biến toàn cục Du_Lieu
         Du_Lieu = pd.concat([Du_Lieu, new_row_DF], ignore_index = True) #Nối dòng mới vào dữ liệu
         Update_Treeview()
+        Update_Page_Treeview()
+        Create_Page_Button()
         messagebox.showinfo('Thông báo','Dữ liệu đã được nhập thành công!')
+        Create_Data_Window.destroy()
     Create_Data_Window = Toplevel(root)
     Create_Data_Window.title('Tạo dòng dữ liệu mới')
     Create_Data_Window.geometry('400x500')
