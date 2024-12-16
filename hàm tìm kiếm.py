@@ -10,22 +10,22 @@ def Search_Data():
 
     def Apply_Search():
         nonlocal search_window
-        column = column_combobox.get()
-        search_value = search_entry.get()
+        column=column_combobox.get()
+        search_value=search_entry.get()
 
         if not search_value:
             messagebox.showerror('Lỗi', 'Vui lòng nhập giá trị cần tìm')
             return
 
         try:
-            if column == "Tất cả các cột":
+            if column=="Tất cả các cột":
                 # Tìm kiếm trên toàn bộ bảng
                 filtered_data = Du_Lieu[
                     Du_Lieu.apply(lambda row: row.astype(str).str.contains(search_value, case=False, na=False).any(), axis=1)
                 ]
             else:
                 # Tìm kiếm trên một cột cụ thể
-                filtered_data = Du_Lieu[Du_Lieu[column].astype(str).str.contains(search_value, case=False, na=False)]
+                filtered_data=Du_Lieu[Du_Lieu[column].astype(str).str.contains(search_value, case=False, na=False)]
 
             if filtered_data.empty:
                 messagebox.showinfo('Thông báo', 'Không tìm thấy dữ liệu phù hợp')
@@ -42,7 +42,7 @@ def Search_Data():
             messagebox.showerror('Lỗi', f'Lỗi khi tìm kiếm dữ liệu: {e}')
 
     # Cửa sổ nhập thông tin tìm kiếm
-    search_window = Toplevel(root)
+    search_window=Toplevel(root)
     search_window.title('Tìm kiếm dữ liệu')
     search_window.geometry('300x250')
 
