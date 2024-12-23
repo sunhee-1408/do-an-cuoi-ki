@@ -630,7 +630,7 @@ Button(crud_entry, text="Kết quả chụp quét Thallium", font="arial 14", bd
 Button(crud_entry, text="Phân phối tuổi", font="arial 14", bd=0, bg=framebg, width=30,command=age).place(x=20, y=520)
 Button(crud_entry, text="Phân phối oldpeak", font="arial 14", bd=0, bg=framebg, width=30,command=trtbps).place(x=20, y=560)
 Button(crud_entry, text="Phân phối cholesterol", font="arial 14", bd=0, bg=framebg, width=30,command=chol).place(x=20, y=600)
-Button(crud_entry, text="Phân phối cholesterol", font="arial 14", bd=0, bg=framebg, width=30,command=thalachh).place(x=20, y=640)
+Button(crud_entry, text="Phân phối nhịp tim tối đa", font="arial 14", bd=0, bg=framebg, width=30,command=thalachh).place(x=20, y=640)
 Button(crud_entry, text="Phân phối huyết áp", font="arial 14", bd=0, bg=framebg, width=30,command=oldpeak).place(x=20, y=680)
 Button(crud_entry, text="Kết quả phân loại", font="arial 14", bd=0, bg=framebg, width=30,command=output).place(x=20, y=720)
 root.mainloop()
