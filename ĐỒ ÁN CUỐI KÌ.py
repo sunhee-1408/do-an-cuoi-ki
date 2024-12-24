@@ -546,71 +546,95 @@ def Delete_Data():
 
 # Hàm tìm kiếm dữ liệu
 def Search_Data():
+    # Kiểm tra nếu dữ liệu (Du_Lieu) chưa được mở, hiển thị thông báo lỗi và kết thúc hàm.
     if Du_Lieu is None:
         messagebox.showerror('Lỗi', 'Vui lòng mở file trước khi tìm kiếm')
         return
 
     def Apply_Search():
+        # Lấy thông tin cột được chọn và giá trị cần tìm từ giao diện.
         nonlocal search_window
-        column=column_combobox.get()
-        search_value=search_entry.get()
+        column = column_combobox.get()  # Lấy cột được chọn từ combobox
+        search_value = search_entry.get()  # Lấy giá trị tìm kiếm từ ô nhập liệu
 
+        # Nếu người dùng không nhập giá trị tìm kiếm, hiển thị lỗi.
         if not search_value:
             messagebox.showerror('Lỗi', 'Vui lòng nhập giá trị cần tìm')
             return
 
         try:
-            if column=="Tất cả các cột":
-                # Tìm kiếm trên toàn bộ bảng
+            # Kiểm tra nếu tìm kiếm trên toàn bộ bảng
+            if column == "Tất cả các cột":
+                # Lọc dữ liệu: Kiểm tra từng dòng xem có chứa giá trị tìm kiếm (bất kể chữ hoa/thường)
                 filtered_data = Du_Lieu[
                     Du_Lieu.apply(lambda row: row.astype(str).str.contains(search_value, case=False, na=False).any(), axis=1)
                 ]
             else:
-                # Tìm kiếm trên một cột cụ thể
-                filtered_data=Du_Lieu[Du_Lieu[column].astype(str).str.contains(search_value, case=False, na=False)]
+                # Tìm kiếm trên một cột cụ thể, lọc dữ liệu thỏa mãn điều kiện
+                filtered_data = Du_Lieu[Du_Lieu[column].astype(str).str.contains(search_value, case=False, na=False)]
 
+            # Nếu không tìm thấy kết quả phù hợp, hiển thị thông báo
             if filtered_data.empty:
                 messagebox.showinfo('Thông báo', 'Không tìm thấy dữ liệu phù hợp')
                 return
 
-            # Hiển thị dữ liệu tìm kiếm trên Treeview
+            # Xóa toàn bộ dữ liệu hiện có trên Treeview (bảng hiển thị dữ liệu)
             for item in treeview.get_children():
                 treeview.delete(item)
+
+            # Thêm dữ liệu đã lọc vào Treeview
             for _, row in filtered_data.iterrows():
                 treeview.insert('', 'end', values=list(row))
-            
-            search_window.destroy()  # Đóng cửa sổ sau khi áp dụng tìm kiếm
+
+            # Đóng cửa sổ tìm kiếm sau khi áp dụng
+            search_window.destroy()
         except Exception as e:
+            # Nếu có lỗi trong quá trình tìm kiếm, hiển thị thông báo lỗi
             messagebox.showerror('Lỗi', f'Lỗi khi tìm kiếm dữ liệu: {e}')
 
-    # Cửa sổ nhập thông tin tìm kiếm
-    search_window=Toplevel(root)
-    search_window.title('Tìm kiếm dữ liệu')
-    search_window.geometry('300x250')
+    # Tạo cửa sổ con (Toplevel) cho chức năng tìm kiếm
+    search_window = Toplevel(root)
+    search_window.title('Tìm kiếm dữ liệu')  # Đặt tiêu đề cho cửa sổ
+    search_window.geometry('300x250')  # Đặt kích thước cửa sổ
 
+    # Label hiển thị hướng dẫn chọn cột
     Label(search_window, text='Chọn cột:', font=('Arial', 10)).pack(pady=10)
+
+    # Combobox hiển thị danh sách các cột trong dữ liệu để người dùng chọn
     column_combobox = Combobox(
         search_window, values=["Tất cả các cột"] + list(Du_Lieu.columns), state='readonly'
     )
-    column_combobox.current(0)  # Chọn "Tất cả các cột" mặc định
+    column_combobox.current(0)  # Đặt giá trị mặc định là "Tất cả các cột"
     column_combobox.pack(pady=5)
 
+    # Label hiển thị hướng dẫn nhập giá trị tìm kiếm
     Label(search_window, text='Nhập giá trị tìm kiếm:', font=('Arial', 10)).pack(pady=10)
+
+    # Entry cho phép người dùng nhập giá trị cần tìm
     search_entry = Entry(search_window)
     search_entry.pack(pady=5)
 
+    # Nút "Tìm kiếm" để thực hiện tìm kiếm khi được nhấn
     Button(search_window, text='Tìm kiếm', command=Apply_Search).pack(pady=20)
     
 def Restore_Data():
+    # Biến toàn cục để đảm bảo dữ liệu và sao lưu có thể truy cập được
     global Du_Lieu, Backup_Data
 
+    # Nếu không có dữ liệu sao lưu, hiển thị thông báo lỗi
     if Backup_Data is None:
         messagebox.showerror('Lỗi', 'Không có dữ liệu nào để khôi phục!')
         return
 
+    # Sao chép dữ liệu sao lưu để khôi phục về trạng thái ban đầu
     Du_Lieu = Backup_Data.copy()
+
+    # Cập nhật Treeview (bảng hiển thị dữ liệu) để phản ánh dữ liệu đã khôi phục
     Update_Treeview()
+
+    # Thông báo cho người dùng rằng dữ liệu đã được khôi phục
     messagebox.showinfo('Thông báo', 'Dữ liệu đã được khôi phục về trạng thái ban đầu!')
+
 
 Button(crud_entry, text="Chọn file muốn đọc", bd=0,font="arial 12", bg="peachpuff", cursor="hand2", width=37, command=Open_Folder).place(x=20, y=0)
 Button(crud_entry, text="Tạo dữ liệu mới cho file",font="arial 12", bd=0, bg="peachpuff", cursor="hand2", width=37, command=Create_Data).place(x=20, y=30)
