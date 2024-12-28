@@ -9,13 +9,17 @@ import matplotlib # dùng để tạo các biểu đồ và hình ảnh minh h�
 import matplotlib.pyplot as plt #tạo các biểu đồ và hình ảnh trực quan.
 import seaborn as sns #giúp tạo các biểu đồ thống kê đẹp mắt và dễ sử dụng.
 import warnings
-from tkinter import filedialog, messagebox, ttk,Button
+from tkinter import filedialog, messagebox, ttk
 warnings.filterwarnings('ignore') #Bỏ qua các cảnh báo để đầu ra gọn gàng hơn
+
+
 df = pd.read_csv("heart.csv", sep=',')
 sns.set(style="whitegrid")
 
 
+
 def cp():
+
     cp_count = df['cp'].value_counts()  # Đếm số lượng từng loại đau ngực
     langs = cp_count.index.astype(str)  # Chuyển chỉ mục thành chuỗi
     values = cp_count.values  # Lấy số lượng
@@ -36,15 +40,16 @@ def cp():
           bbox_to_anchor=(1, 0, 0.5, 1))  # Vị trí chú thích
 
 # Đặt tiêu đề
-    ax.set_title('Tỉ lệ bệnh nhân theo loại đau ngực (cp)',fontsize= 16)
-    plt.show()     
+    plt.title('Tỉ lệ bệnh nhân theo loại đau ngực (cp)',fontsize= 16)
+    plt.show()
 def sex():
     sex_count = df['sex'].value_counts()  # Đếm số lượng từng loại đau ngực
     langs = sex_count.index.astype(str)  # Chuyển chỉ mục thành chuỗi
     values = sex_count.values  # Lấy số lượng
 
     # Vẽ biểu đồ
-    fig, ax = plt.subplots()
+    fig = plt.figure()
+    ax = fig.add_axes([0, 0, 1, 1])
 
     wedges, texts, autotexts = ax.pie(values, labels=langs, autopct='%1.2f%%')
 
@@ -57,7 +62,7 @@ def sex():
           title="Tỉ lệ bênh nhân theo giới tính", 
           loc="center left", 
           bbox_to_anchor=(1, 0, 0.5, 1))  # Vị trí chú thích
-    ax.set_title('Tỉ lệ bênh nhân theo giới tính(sex)',fontsize= 16)
+
     plt.show()
 def fbs():
     fbs_count = df['fbs'].value_counts()  # Đếm số lượng từng loại đau ngực
@@ -65,7 +70,8 @@ def fbs():
     values = fbs_count.values  # Lấy số lượng
 
     # Vẽ biểu đồ
-    fig, ax = plt.subplots()
+    fig = plt.figure()
+    ax = fig.add_axes([-0.2, 0, 1, 1])
 
     wedges, texts, autotexts = ax.pie(values, labels=langs, autopct='%1.2f%%')
 
@@ -78,7 +84,7 @@ def fbs():
           title="Lượng đường trong máu khi đói", 
           loc="center left", 
           bbox_to_anchor=(1, 0,-0.4, 0.5))  # Vị trí chú thích
-    ax.set_title('Tỉ lệ lượng đường trong máu khi đói(fbs)',fontsize=16 )
+
     plt.show()
 def restecg():
     restecg_count = df['restecg'].value_counts()  # Đếm số lượng từng loại đau ngực
@@ -86,13 +92,14 @@ def restecg():
     values = restecg_count.values  # Lấy số lượng
 
     # Vẽ biểu đồ
-    fig, ax = plt.subplots()
+    fig = plt.figure()
+    ax = fig.add_axes([0, 0, 1, 1])
 
     wedges, texts, autotexts = ax.pie(values, labels=langs, autopct='%1.2f%%')
 
     restecg_labels = {
         0: 'Loại 0 :Không có sóng ST',
-        1: 'Loại 1 :Sóng ST bình thường',
+        1: 'Loại 1 :Sóng ST bình thường)',
         2: 'Loại 2 :Có sóng ST bất thường'
     }
     # Thêm chú thích
@@ -100,7 +107,7 @@ def restecg():
             title="Điện tâm đồ khi nghỉ ngơi", 
             loc="center left", 
             bbox_to_anchor=(1, 0, 0.5, 1))  # Vị trí chú thích
-    ax.set_title('Tỉ lệ điện tâm đồ khi nghỉ ngơi(restecg)',fontsize=16)    
+
     plt.show()
 def exng():
     exng_count = df['exang'].value_counts()  # Đếm số lượng từng loại đau ngực
@@ -108,7 +115,9 @@ def exng():
     values = exng_count.values  # Lấy số lượng
 
     # Vẽ biểu đồ
-    fig,ax = plt.subplots()
+    fig = plt.figure()
+    ax = fig.add_axes([0, 0, 1, 1])
+
     wedges, texts, autotexts = ax.pie(values, labels=langs, autopct='%1.2f%%')
 
     exng_labels = {
@@ -121,7 +130,7 @@ def exng():
             title="Đau ngực do gắng sức", 
             loc="center left", 
             bbox_to_anchor=(1, 0, 0.5, 1))  # Vị trí chú thích
-    ax.set_title('Tỉ lệ đau ngực do gắng sức(exng)',fontsize=16 )
+
     plt.show()
 def slp():
     slp_count = df['slp'].value_counts()  # Đếm số lượng từng loại đau ngực
@@ -129,7 +138,8 @@ def slp():
     values = slp_count.values  # Lấy số lượng
 
     # Vẽ biểu đồ
-    fig, ax = plt.subplots()
+    fig = plt.figure()
+    ax = fig.add_axes([-0.2, 0, 1, 1])
 
     wedges, texts, autotexts = ax.pie(values, labels=langs, autopct='%1.2f%%')
 
@@ -143,7 +153,7 @@ def slp():
             title="Độ dốc của đoạn ST cực đại trong bài kiểm tra gắng sức", 
             loc="center left", 
             bbox_to_anchor=(1, 0, 0.5, 1))  # Vị trí chú thích
-    ax.set_title('Tỉ lệ độ dốc của đoạn ST cực đại trong bài kiểm tra gắng sức(slp)',fontsize=16 )
+
     plt.show()
 def caa():
     caa_count = df['ca'].value_counts()  # Đếm số lượng từng loại đau ngực
@@ -151,8 +161,8 @@ def caa():
     values = caa_count.values  # Lấy số lượng
 
     # Vẽ biểu đồ
-    fig, ax = plt.subplots()
-
+    fig = plt.figure()
+    ax = fig.add_axes([-0.2, 0, 1, 1])
 
     wedges, texts, autotexts = ax.pie(values, labels=langs, autopct='%1.2f%%')
 
@@ -165,17 +175,16 @@ def caa():
     }
     # Thêm chú thích
     ax.legend(wedges, [h1_labels[int(lang)] for lang in langs], 
-            title="Bất thường động mạch vành", 
+            title="Độ dốc của đoạn ST cực đại trong bài kiểm tra gắng sức", 
             loc="center left", 
             bbox_to_anchor=(1, 0, 0.5, 1))  # Vị trí chú thích
-    ax.set_title('Tỉ lệ bất thường động mạch vành',fontsize=16 )
     plt.show()
 def thall():
     thall_count = df['thal'].value_counts()  # Đếm số lượng từng loại đau ngực
     langs = thall_count.index.astype(str)  # Chuyển chỉ mục thành chuỗi
     values = thall_count.values  # Lấy số lượng
-    fig, ax = plt.subplots()
-
+    fig = plt.figure()
+    ax = fig.add_axes([-0.2, 0, 1, 1])
     wedges, texts, autotexts = ax.pie(values, labels=langs, autopct='%1.2f%%')
 
     thall_labels = {
@@ -186,10 +195,10 @@ def thall():
     }
     # Thêm chú thích
     ax.legend(wedges, [thall_labels[int(lang)] for lang in langs], 
-            title="Kết quả chụp quét Thallium", 
+            title="Độ dốc của đoạn ST cực đại trong bài kiểm tra gắng sức", 
             loc="center left", 
             bbox_to_anchor=(1, 0, 0.5, 1))  # Vị trí chú thích
-    ax.set_title('Tỉ lệ kết quả chụp quét Thallium',fontsize=16 )
+
     plt.show()
 def output():
     output_count = df['output'].value_counts()  # Đếm số lượng từng loại đau ngực
@@ -197,7 +206,8 @@ def output():
     values = output_count.values  # Lấy số lượng
 
     # Vẽ biểu đồ
-    fig, ax = plt.subplots()
+    fig = plt.figure()
+    ax = fig.add_axes([-0.2, 0, 1, 1])
 
     wedges, texts, autotexts = ax.pie(values, labels=langs, autopct='%1.2f%%')
 
@@ -211,12 +221,12 @@ def output():
             title="Kết quả phân loại", 
             loc="center left", 
             bbox_to_anchor=(1, 0, 0.5, 1))  # Vị trí chú thích
-    ax.set_title('Tỉ lệ kết quả phân loại ',fontsize=16 )
+
     plt.show()
 def age():
     plt.figure(figsize=(8, 6))
     sns.histplot(df['age'], bins=20, color='skyblue', alpha=0.7,kde=True)
-    plt.title("Biểu đồ phân phối độ tuổi của người bệnh")
+    plt.title("biểu đô phân phối độ tuổi của người bệnh")
     plt.xlabel("Tuổi")
     plt.ylabel("Số người")
     plt.grid(True, linestyle='--', alpha=0.5)
@@ -318,7 +328,7 @@ frame.place(x=400, y=0, width=1135, height=600)
 
 #Tạo hàm mở file csv
 def Open_Folder(): #Mở thư mục
-    global Du_Lieu, treeview, current_page, Backup_Data, buttons
+    global Du_Lieu, treeview, current_page, Backup_Data, button
     #Mở hộp thoại để chọn tệp (người dùng chỉ có thể chọn file có đuôi csv)
     file_path = filedialog.askopenfilename(
         title='Chọn file csv',
@@ -337,10 +347,10 @@ def Open_Folder(): #Mở thư mục
         messagebox.showerror('Lỗi',f'không thể đọc file {e}')
         return
     Create_Treeview()
-    
+
 #Hàm cập nhật Treeview theo trang
 def Update_Page_Treeview():
-    global treeview, current_page, all_page
+    global treeview, current_page
     # Tính tổng số trang
     all_page = (len(Du_Lieu) + row_in_page - 1) // row_in_page
     if current_page >= all_page:
@@ -357,12 +367,15 @@ def Update_Page_Treeview():
     # Chèn dữ liệu tương ứng với trang hiện tại
     for _, row in Du_Lieu.iloc[start_row:end_row].iterrows():
         treeview.insert('', 'end', values=list(row))
+
 #Hàm chuyển trang
 def Go_To_Page(page):
-    global current_page, all_page
+    global current_page
+    all_page = (len(Du_Lieu) + row_in_page - 1) // row_in_page
     if 0 <= page < all_page:
         current_page = page
         Update_Page_Treeview()
+
 #Hàm tạo các nút trang (phân trang)
 def Create_Page_Button():
     global all_page
@@ -370,6 +383,11 @@ def Create_Page_Button():
     # Xóa các nút cũ trong Frame_Button
     for widget in Frame_Button.winfo_children():
         widget.destroy()
+
+    # Tính tổng số trang
+    if row_in_page <= 0:
+        raise ValueError("Số dòng trên mỗi trang (row_in_page) phải lớn hơn 0.")
+    all_page = (len(Du_Lieu) + row_in_page - 1) // row_in_page
 
     # Đặt vị trí Frame_Button
     Frame_Button.place(x=450, y=600, width=1000, height=200)  # Tăng chiều rộng và chiều cao frame
@@ -415,6 +433,7 @@ def Create_Page_Button():
         Frame_Button.grid_rowconfigure(i, weight=1)
     for i in range(max_columns):
         Frame_Button.grid_columnconfigure(i, weight=1)
+
 #Tạo hàm trở về tất cả các trang 
 def All_Page():
     global current_page
@@ -426,6 +445,7 @@ def All_Page():
         treeview.insert('', 'end', values=list(row))
     # Đặt lại trạng thái trang hiện tại về ban đầu (không có phân trang)
     current_page = -1
+
 #Tạo hàm kiểm tra dữ liệu người dùng nhập vào
 def Check(prompt):
     while True:
@@ -437,6 +457,7 @@ def Check(prompt):
             return value
         except ValueError:
             print('Giá trị người dùng nhập không hợp lệ (nhập 1 số hoặc để trống)')
+
 #Hàm để thêm dữ liệu mới nhập vào Treeview
 def Update_Treeview():
     global treeview
@@ -487,6 +508,8 @@ def Create_Data():
         entry.grid(row=i, column=1, padx=10, pady=5)
         Name_Key[column] = entry
     Button(Create_Data_Window, text='Lưu dữ liệu', command=Save_Create_Data).grid(row=len(Du_Lieu.columns), column=0, columnspan=2, pady=20)
+
+
 def Edit_Data():
     global Du_Lieu, treeview
 
@@ -537,6 +560,7 @@ def Edit_Data():
         Name_Key[column] = entry
 
     Button(Edit_Data_Window, text='Lưu thay đổi', command=Save_Edit_Data).grid(row=len(Du_Lieu.columns), column=0, columnspan=2, pady=20)
+
 def Delete_Data():
     global Du_Lieu, treeview
 
@@ -557,6 +581,8 @@ def Delete_Data():
     Du_Lieu = Du_Lieu.drop(selected_index).reset_index(drop=True)
     Update_Treeview()
     messagebox.showinfo('Thông báo', 'Dữ liệu đã được xóa thành công!')
+
+
 # Hàm tìm kiếm dữ liệu
 def Search_Data():
     # Kiểm tra nếu dữ liệu (Du_Lieu) chưa được mở, hiển thị thông báo lỗi và kết thúc hàm.
@@ -629,6 +655,7 @@ def Search_Data():
 
     # Nút "Tìm kiếm" để thực hiện tìm kiếm khi được nhấn
     Button(search_window, text='Tìm kiếm', command=Apply_Search).pack(pady=20)
+    
 def Restore_Data():
     # Biến toàn cục để đảm bảo dữ liệu và sao lưu có thể truy cập được
     global Du_Lieu, Backup_Data
@@ -646,6 +673,10 @@ def Restore_Data():
 
     # Thông báo cho người dùng rằng dữ liệu đã được khôi phục
     messagebox.showinfo('Thông báo', 'Dữ liệu đã được khôi phục về trạng thái ban đầu!')
+
+def logout():
+    root.destroy()
+
 def enable_buttons():
     for button in buttons:
         button.config(state="normal")  # Kích hoạt tất cả các nút
@@ -656,7 +687,6 @@ Button(crud_entry, text="Chỉnh sửa dữ liệu",font="arial 12", bd=0, bg="p
 Button(crud_entry, text="Khôi phục dữ liệu",font="arial 12", bd=0, bg="peachpuff", cursor="hand2", width=37,command=Restore_Data).place(x=20, y=90)
 Button(crud_entry, text="Xóa dữ liệu",font="arial 12", bd=0, bg="peachpuff", cursor="hand2", width=37, command=Delete_Data).place(x=20, y=120)
 Button(crud_entry, text="Tìm kiếm dữ liệu",font="arial 12", bd=0, bg="peachpuff", cursor="hand2", width=37, command=Search_Data).place(x=20, y=150)
-
 
 buttons=[]
 buttons.append(Button(crud_entry, text="Tỉ lệ bệnh nhân theo loại đau ngực (cp)", font="arial 14", bd=0, bg=framebg, width=30, command=cp,state="disabled"))
@@ -674,4 +704,5 @@ buttons.append(Button(crud_entry, text="Phân phối nhịp tim tối đa", font
 buttons.append(Button(crud_entry, text="Phân phối huyết áp", font="arial 14", bd=0, bg=framebg, width=30,command=oldpeak,state="disabled"))
 for i, button in enumerate(buttons):
     button.place(x=20, y=200 + i * 40)
+Button(crud_entry, text="Thoát", font="arial 14",  bd=2, bg="blueviolet", fg="white", width=10, command=logout).place(x=120, y=760)
 root.mainloop()
