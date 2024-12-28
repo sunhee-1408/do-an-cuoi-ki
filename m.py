@@ -9,7 +9,7 @@ import matplotlib # dùng để tạo các biểu đồ và hình ảnh minh h�
 import matplotlib.pyplot as plt #tạo các biểu đồ và hình ảnh trực quan.
 import seaborn as sns #giúp tạo các biểu đồ thống kê đẹp mắt và dễ sử dụng.
 import warnings
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, messagebox, ttk,Button
 warnings.filterwarnings('ignore') #Bỏ qua các cảnh báo để đầu ra gọn gàng hơn
 df = pd.read_csv("heart.csv", sep=',')
 sns.set(style="whitegrid")
@@ -318,7 +318,7 @@ frame.place(x=400, y=0, width=1135, height=600)
 
 #Tạo hàm mở file csv
 def Open_Folder(): #Mở thư mục
-    global Du_Lieu, treeview, current_page, Backup_Data
+    global Du_Lieu, treeview, current_page, Backup_Data, buttons
     #Mở hộp thoại để chọn tệp (người dùng chỉ có thể chọn file có đuôi csv)
     file_path = filedialog.askopenfilename(
         title='Chọn file csv',
@@ -332,10 +332,12 @@ def Open_Folder(): #Mở thư mục
         Create_Treeview()
         Update_Page_Treeview()
         Create_Page_Button()
+        enable_buttons()
     except Exception as e:
         messagebox.showerror('Lỗi',f'không thể đọc file {e}')
         return
     Create_Treeview()
+    
 #Hàm cập nhật Treeview theo trang
 def Update_Page_Treeview():
     global treeview, current_page
@@ -650,8 +652,9 @@ def Restore_Data():
 
     # Thông báo cho người dùng rằng dữ liệu đã được khôi phục
     messagebox.showinfo('Thông báo', 'Dữ liệu đã được khôi phục về trạng thái ban đầu!')
-
-
+def enable_buttons():
+    for button in buttons:
+        button.config(state="normal")  # Kích hoạt tất cả các nút
 
 Button(crud_entry, text="Chọn file muốn đọc", bd=0,font="arial 12", bg="peachpuff", cursor="hand2", width=37, command=Open_Folder).place(x=20, y=0)
 Button(crud_entry, text="Tạo dữ liệu mới cho file",font="arial 12", bd=0, bg="peachpuff", cursor="hand2", width=37, command=Create_Data).place(x=20, y=30)
@@ -660,18 +663,21 @@ Button(crud_entry, text="Khôi phục dữ liệu",font="arial 12", bd=0, bg="pe
 Button(crud_entry, text="Xóa dữ liệu",font="arial 12", bd=0, bg="peachpuff", cursor="hand2", width=37, command=Delete_Data).place(x=20, y=120)
 Button(crud_entry, text="Tìm kiếm dữ liệu",font="arial 12", bd=0, bg="peachpuff", cursor="hand2", width=37, command=Search_Data).place(x=20, y=150)
 
-Button(crud_entry, text="Tỉ lệ bệnh nhân theo loại đau ngực (cp)", font="arial 14", bd=0, bg=framebg, width=30, command=cp).place(x=20,y=200)
-Button(crud_entry, text="Tỉ lệ bênh nhân theo giới tính", font="arial 14", bd=0, bg=framebg, width=30,command=sex).place(x=20, y=240)
-Button(crud_entry, text="Lượng đường trong máu khi đói", font="arial 14", bd=0, bg=framebg, width=30,command=fbs).place(x=20, y=280)
-Button(crud_entry, text="Điện tâm đồ khi nghỉ ngơi", font="arial 14", bd=0, bg=framebg, width=30,command=restecg).place(x=20, y=320)
-Button(crud_entry, text="Đau ngực do gắng sức", font="arial 14", bd=0, bg=framebg, width=30,command=exng).place(x=20, y=360)
-Button(crud_entry, text="Độ dốc trong bài kiểm tra gắng sức", font="arial 14", bd=0, bg=framebg, width=30,command=slp).place(x=20, y=400)
-Button(crud_entry, text="Bất thường động mạch vành", font="arial 14", bd=0, bg=framebg, width=30,command=caa).place(x=20, y=440)
-Button(crud_entry, text="Kết quả chụp quét Thallium", font="arial 14", bd=0, bg=framebg, width=30,command=thall).place(x=20, y=480)
-Button(crud_entry, text="Phân phối tuổi", font="arial 14", bd=0, bg=framebg, width=30,command=age).place(x=20, y=520)
-Button(crud_entry, text="Phân phối oldpeak", font="arial 14", bd=0, bg=framebg, width=30,command=trtbps).place(x=20, y=560)
-Button(crud_entry, text="Phân phối cholesterol", font="arial 14", bd=0, bg=framebg, width=30,command=chol).place(x=20, y=600)
-Button(crud_entry, text="Phân phối nhịp tim tối đa", font="arial 14", bd=0, bg=framebg, width=30,command=thalachh).place(x=20, y=640)
-Button(crud_entry, text="Phân phối huyết áp", font="arial 14", bd=0, bg=framebg, width=30,command=oldpeak).place(x=20, y=680)
-Button(crud_entry, text="Kết quả phân loại", font="arial 14", bd=0, bg=framebg, width=30,command=output).place(x=20, y=720)
+
+buttons=[]
+buttons.append(Button(crud_entry, text="Tỉ lệ bệnh nhân theo loại đau ngực (cp)", font="arial 14", bd=0, bg=framebg, width=30, command=cp,state="disabled"))
+buttons.append(Button(crud_entry, text="Tỉ lệ bênh nhân theo giới tính", font="arial 14", bd=0, bg=framebg, width=30,command=sex,state="disabled"))
+buttons.append(Button(crud_entry, text="Lượng đường trong máu khi đói", font="arial 14", bd=0, bg=framebg, width=30,command=fbs,state="disabled"))
+buttons.append(Button(crud_entry, text="Điện tâm đồ khi nghỉ ngơi", font="arial 14", bd=0, bg=framebg, width=30,command=restecg,state="disabled"))
+buttons.append(Button(crud_entry, text="Đau ngực do gắng sức", font="arial 14", bd=0, bg=framebg, width=30,command=exng,state="disabled"))
+buttons.append(Button(crud_entry, text="Độ dốc trong bài kiểm tra gắng sức", font="arial 14", bd=0, bg=framebg, width=30,command=slp,state="disabled"))
+buttons.append(Button(crud_entry, text="Bất thường động mạch vành", font="arial 14", bd=0, bg=framebg, width=30,command=caa,state="disabled"))
+buttons.append(Button(crud_entry, text="Kết quả chụp quét Thallium", font="arial 14", bd=0, bg=framebg, width=30,command=thall,state="disabled"))
+buttons.append(Button(crud_entry, text="Phân phối tuổi", font="arial 14", bd=0, bg=framebg, width=30,command=age,state="disabled"))
+buttons.append(Button(crud_entry, text="Phân phối oldpeak", font="arial 14", bd=0, bg=framebg, width=30,command=trtbps,state="disabled"))
+buttons.append(Button(crud_entry, text="Phân phối cholesterol", font="arial 14", bd=0, bg=framebg, width=30,command=chol,state="disabled"))
+buttons.append(Button(crud_entry, text="Phân phối nhịp tim tối đa", font="arial 14", bd=0, bg=framebg, width=30,command=thalachh,state="disabled"))
+buttons.append(Button(crud_entry, text="Phân phối huyết áp", font="arial 14", bd=0, bg=framebg, width=30,command=oldpeak,state="disabled"))
+for i, button in enumerate(buttons):
+    button.place(x=20, y=200 + i * 40)
 root.mainloop()
