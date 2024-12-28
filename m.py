@@ -197,8 +197,7 @@ def output():
     values = output_count.values  # Lấy số lượng
 
     # Vẽ biểu đồ
-    fig = plt.figure()
-    ax = fig.add_axes([-0.2, 0, 1, 1])
+    fig, ax = plt.subplots()
 
     wedges, texts, autotexts = ax.pie(values, labels=langs, autopct='%1.2f%%')
 
@@ -212,7 +211,7 @@ def output():
             title="Kết quả phân loại", 
             loc="center left", 
             bbox_to_anchor=(1, 0, 0.5, 1))  # Vị trí chú thích
-
+    ax.set_title('Tỉ lệ kết quả phân loại ',fontsize=16 )
     plt.show()
 def age():
     plt.figure(figsize=(8, 6))
