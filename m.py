@@ -340,7 +340,7 @@ def Open_Folder(): #Mở thư mục
     
 #Hàm cập nhật Treeview theo trang
 def Update_Page_Treeview():
-    global treeview, current_page
+    global treeview, current_page, all_page
     # Tính tổng số trang
     all_page = (len(Du_Lieu) + row_in_page - 1) // row_in_page
     if current_page >= all_page:
@@ -359,8 +359,7 @@ def Update_Page_Treeview():
         treeview.insert('', 'end', values=list(row))
 #Hàm chuyển trang
 def Go_To_Page(page):
-    global current_page
-    all_page = (len(Du_Lieu) + row_in_page - 1) // row_in_page
+    global current_page, all_page
     if 0 <= page < all_page:
         current_page = page
         Update_Page_Treeview()
@@ -371,11 +370,6 @@ def Create_Page_Button():
     # Xóa các nút cũ trong Frame_Button
     for widget in Frame_Button.winfo_children():
         widget.destroy()
-
-    # Tính tổng số trang
-    if row_in_page <= 0:
-        raise ValueError("Số dòng trên mỗi trang (row_in_page) phải lớn hơn 0.")
-    all_page = (len(Du_Lieu) + row_in_page - 1) // row_in_page
 
     # Đặt vị trí Frame_Button
     Frame_Button.place(x=450, y=600, width=1000, height=200)  # Tăng chiều rộng và chiều cao frame
